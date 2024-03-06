@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 @RequestMapping("api/v1/streamify")
 public class MovieController {
 
@@ -22,8 +23,18 @@ public class MovieController {
     }
 
     @GetMapping("/movie")
-    public ResponseEntity<Optional<Movie>> getMovieByParam(@RequestParam String title) {
+    public ResponseEntity<Optional<Movie>> getMovieByTitle(@RequestParam String title) {
         return new ResponseEntity<>(movieService.findMovieByTitle(title), HttpStatus.OK);
+    }
+
+    @GetMapping("/genre")
+    public ResponseEntity<List<Optional<Movie>>> getMovieByGenre(@RequestParam String value) {
+        return new ResponseEntity<>(movieService.findMoviesByGenre(value), HttpStatus.OK);
+    }
+
+    @GetMapping("/rating")
+    public ResponseEntity<List<Optional<Movie>>> getMovieByRating(@RequestParam String value) {
+        return new ResponseEntity<>(movieService.findMoviesByRating(value), HttpStatus.OK);
     }
 
     @PostMapping("/movie")
